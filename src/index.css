@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #ffffff;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Hide scrollbars for mockup */
+::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom styles for mockup */
+.mockup-container {
+  width: 1140px;
+  height: 1280px;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Remove focus outlines for cleaner mockup */
+*:focus {
+  outline: none !important;
+}
+
+/* Ensure all text is visible */
+.MuiTypography-root {
+  color: inherit !important;
+}
+
+/* Ensure buttons have proper contrast */
+.MuiButton-root {
+  color: inherit !important;
+}
+
+/* Ensure chips have proper contrast */
+.MuiChip-root {
+  color: inherit !important;
+}
+
+/* Fix any white text on white background issues */
+.MuiTab-root {
+  color: #000000 !important;
+}
+
+.MuiTab-root.Mui-selected {
+  color: #1D4F91 !important;
+}
