@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   AppBar,
   Toolbar,
@@ -8,8 +8,7 @@ import {
   Container,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Link, useLocation } from 'react-router-dom';
-import LoginModal from './LoginModal';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -70,7 +69,7 @@ const LoginButton = styled(Button)(({ theme }) => ({
 
 const Header = ({ activeTab }) => {
   const location = useLocation();
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const navigate = useNavigate();
   
   const getActiveTab = () => {
     if (activeTab) return activeTab;
@@ -94,11 +93,7 @@ const Header = ({ activeTab }) => {
   const currentActiveTab = getActiveTab();
   
   const handleLoginClick = () => {
-    setLoginModalOpen(true);
-  };
-  
-  const handleLoginClose = () => {
-    setLoginModalOpen(false);
+    navigate('/login');
   };
   
   return (
@@ -131,11 +126,6 @@ const Header = ({ activeTab }) => {
           </UserNav>
         </Toolbar>
       </Container>
-      
-      <LoginModal 
-        open={loginModalOpen} 
-        onClose={handleLoginClose} 
-      />
     </StyledAppBar>
   );
 };
