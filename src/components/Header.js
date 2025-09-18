@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -6,9 +6,10 @@ import {
   Button,
   Box,
   Container,
-  Link,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { Link, useLocation } from 'react-router-dom';
+import LoginModal from './LoginModal';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -30,10 +31,10 @@ const MainNav = styled(Box)(({ theme }) => ({
   alignItems: 'center',
 }));
 
-const NavLink = styled(Link)(({ theme }) => ({
+const NavLink = styled(Link)(({ theme, active }) => ({
   fontWeight: 500,
   fontSize: '16px',
-  color: theme.palette.text.primary,
+  color: active ? theme.palette.primary.main : theme.palette.text.primary,
   textDecoration: 'none',
   padding: theme.spacing(1, 0),
   position: 'relative',
@@ -42,8 +43,7 @@ const NavLink = styled(Link)(({ theme }) => ({
     color: theme.palette.primary.main,
     textDecoration: 'underline',
   },
-  '&.active': {
-    color: theme.palette.primary.main,
+  ...(active && {
     '&::after': {
       content: '""',
       position: 'absolute',
@@ -53,7 +53,7 @@ const NavLink = styled(Link)(({ theme }) => ({
       height: '3px',
       backgroundColor: theme.palette.primary.main,
     },
-  },
+  }),
 }));
 
 const UserNav = styled(Box)(({ theme }) => ({
@@ -68,7 +68,39 @@ const LoginButton = styled(Button)(({ theme }) => ({
   fontWeight: 500,
 }));
 
-const Header = () => {
+const Header = ({ activeTab }) => {
+  const location = useLocation();
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  
+  const getActiveTab = () => {
+    if (activeTab) return activeTab;
+    
+    switch (location.pathname) {
+      case '/':
+        return 'Buy';
+      case '/rent':
+        return 'Rent';
+      case '/commercial':
+        return 'Commercial';
+      case '/new-projects':
+        return 'New Projects';
+      case '/find-agent':
+        return 'Find Agent';
+      default:
+        return 'Buy';
+    }
+  };
+  
+  const currentActiveTab = getActiveTab();
+  
+  const handleLoginClick = () => {
+    setLoginModalOpen(true);
+  };
+  
+  const handleLoginClose = () => {
+    setLoginModalOpen(false);
+  };
+  
   return (
     <StyledAppBar position="static">
       <Container maxWidth="lg">
@@ -80,26 +112,30 @@ const Header = () => {
             alignItems: 'center'
           }}
         >
-          <Logo variant="h6" component="a" href="/">
+          <Logo variant="h6" component={Link} to="/">
             IONEXUS
           </Logo>
           
           <MainNav>
-            <NavLink href="/" className="active">Buy</NavLink>
-            <NavLink href="/rent">Rent</NavLink>
-            <NavLink href="/commercial">Commercial</NavLink>
-            <NavLink href="/new-projects">New Projects</NavLink>
-            <NavLink href="/find-agent">Find Agent</NavLink>
+            <NavLink to="/" active={currentActiveTab === 'Buy'}>Buy</NavLink>
+            <NavLink to="/rent" active={currentActiveTab === 'Rent'}>Rent</NavLink>
+            <NavLink to="/commercial" active={currentActiveTab === 'Commercial'}>Commercial</NavLink>
+            <NavLink to="/new-projects" active={currentActiveTab === 'New Projects'}>New Projects</NavLink>
+            <NavLink to="/find-agent" active={currentActiveTab === 'Find Agent'}>Find Agent</NavLink>
           </MainNav>
 
           <UserNav>
-            
-            <LoginButton variant="outlined">
+            <LoginButton variant="outlined" onClick={handleLoginClick}>
               Login
             </LoginButton>
           </UserNav>
         </Toolbar>
       </Container>
+      
+      <LoginModal 
+        open={loginModalOpen} 
+        onClose={handleLoginClose} 
+      />
     </StyledAppBar>
   );
 };

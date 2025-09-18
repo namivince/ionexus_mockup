@@ -110,9 +110,10 @@ const theme = createTheme({
         },
         contained: {
           backgroundColor: '#1A237E',
-          color: '#FFFFFF',
+          color: '#FFFFFF !important',
           '&:hover': {
             backgroundColor: '#0f1654',
+            color: '#FFFFFF !important',
           },
         },
         outlined: {

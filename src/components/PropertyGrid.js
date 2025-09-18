@@ -10,6 +10,7 @@ import {
   Chip,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 import BedIcon from '@mui/icons-material/Bed';
 import BathtubIcon from '@mui/icons-material/Bathtub';
 import SquareFootIcon from '@mui/icons-material/SquareFoot';
@@ -31,6 +32,7 @@ const PropertyCard = styled(Card)(({ theme }) => ({
   height: '100%',
   boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
   transition: 'transform 0.2s, box-shadow 0.2s',
+  cursor: 'pointer',
   '&:hover': {
     transform: 'translateY(-4px)',
     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
@@ -88,6 +90,11 @@ const PropertyFeature = styled(Box)(({ theme }) => ({
 }));
 
 const PropertyGrid = () => {
+  const navigate = useNavigate();
+  
+  const handlePropertyClick = (propertyId) => {
+    navigate(`/property/${propertyId}`);
+  };
   const properties = [
     {
       id: 1,
@@ -245,7 +252,7 @@ const PropertyGrid = () => {
         <Grid container spacing={3}>
           {properties.map((property) => (
             <Grid item xs={12} sm={6} md={4} key={property.id}>
-              <PropertyCard>
+              <PropertyCard onClick={() => handlePropertyClick(property.id)}>
                 <Box position="relative">
                   <PropertyImage
                     image={property.image}
